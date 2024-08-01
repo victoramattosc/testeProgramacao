@@ -1,0 +1,39 @@
+<div class="logo">
+  <img src="assets/img/Logo-Photoroom.png" alt="Company Logo">
+</div>
+<div class="content">
+  <div class="addTask">
+    <div class="inputDiv">
+      <input [(ngModel)]="newTodo.title" placeholder="Title" class="input">
+      <input [(ngModel)]="newTodo.description" placeholder="Description" class="input desc">
+    </div>
+    <button (click)="addTodo()" class="button">➕</button>
+  </div>
+
+  <div class="taskList">
+    <div *ngFor="let todo of todos" class="taskItem">
+      <input 
+        type="checkbox" 
+        [checked]="todo.completed" 
+        (change)="toggleComplete(todo)" 
+        [attr.aria-checked]="todo.completed ? 'true' : 'false'">
+        
+      <div class="taskContent">
+        <div class="taskText">
+          <span *ngIf="editingTodo !== todo" class="taskTitle">{{ todo.title }}</span>
+          <input *ngIf="editingTodo === todo" [(ngModel)]="todo.title" class="taskTitle editing" />
+
+          <p *ngIf="editingTodo !== todo" class="taskDescription">{{ todo.description }}</p>
+          <input *ngIf="editingTodo === todo" [(ngModel)]="todo.description" class="taskDescription editing" />
+        </div>
+        
+        <div class="taskActions">
+          <button *ngIf="editingTodo !== todo" (click)="editTodo(todo)" class="button">✏️</button>
+          <button *ngIf="editingTodo === todo" (click)="saveEdit()" class="button">💾</button>
+          <button *ngIf="editingTodo === todo" (click)="cancelEdit()" class="button">🚫</button>
+          <button *ngIf="editingTodo !== todo" (click)="deleteTodo(todo.id)" class="button">🗑️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
